@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2017, Mairie de Paris
+ * Copyright (c) 2002-2023, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -51,7 +51,6 @@ import fr.paris.lutece.portal.service.util.AppPropertiesService;
 import fr.paris.lutece.util.ReferenceItem;
 import fr.paris.lutece.util.ReferenceList;
 
-
 /**
  * 
  * OpenStreetMapProvider : provides Open street map support for Generic Attributes
@@ -87,6 +86,7 @@ public class CartographyProvider implements ICartoProvider
     {
         return TEMPLATE_HTML;
     }
+
     /**
      * {@inheritDoc}
      */
@@ -117,117 +117,120 @@ public class CartographyProvider implements ICartoProvider
         return "Cartography Provider";
     }
 
-	@Override
-	public Object getParameter(int arg0) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	/**
+    @Override
+    public Object getParameter( int arg0 )
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    /**
      * Builds the {@link ReferenceList} of all available map providers
      * 
      * @return the {@link ReferenceList}
      */
-	@Override
+    @Override
     public ReferenceList getMapProvidersRefList( )
     {
-    	return MapTemplateHome.getMapTemplatesReferenceList( );
-    }
-	
-	/**
-     * {@inheritDoc}
-     */
-	@Override
-	public String getGeolocItemPoint( Double x, Double y, String adresse )
-    {	
-	        
-	        GeolocItem geolocItem = new GeolocItem( );
-	        HashMap<String, Object> properties = new HashMap<>( );
-	        properties.put( GeolocItem.PATH_PROPERTIES_ADDRESS, adresse );
-	
-	        HashMap<String, Object> geometry = new HashMap<>( );
-	        geometry.put( GeolocItem.PATH_GEOMETRY_COORDINATES, Arrays.asList( x, y ) );
-	        geometry.put( GeolocItem.PATH_GEOMETRY_TYPE, GeolocItem.VALUE_GEOMETRY_TYPE );
-	        geolocItem.setGeometry( geometry );
-	        geolocItem.setProperties( properties );
-	        
-	        return geolocItem.toJSON();
-    }
-    
-	/**
-     * {@inheritDoc}
-     */
-	@Override
-    public String getGeolocItemPolygon( String coordinate )
-    {
-		GeolocItemPolygon geoPolygon = getGeolocItemGeneral( coordinate, GeolocItem.VALUE_GEOMETRY_TYPE_POLYGON );
-        
-        geoPolygon.setTypegeometry( GeolocItem.VALUE_GEOMETRY_TYPE_POLYGON );
-        
-        return geoPolygon.toJSON();
-    }
-	
-	/**
-     * {@inheritDoc}
-     */
-	@Override
-    public String getGeolocItemPolyline( String coordinate )
-    {
-		GeolocItemPolygon geoPolygon = getGeolocItemGeneral( coordinate, GeolocItem.VALUE_GEOMETRY_TYPE_POLYLINE );
-        
-        geoPolygon.setTypegeometry( GeolocItem.VALUE_GEOMETRY_TYPE_POLYLINE );
-        
-        return geoPolygon.toJSON();
+        return MapTemplateHome.getMapTemplatesReferenceList( );
     }
 
-	@Override
-	public String getSolrTag(String strIdLayer) {
-		Optional<DataLayer> dataLayer = DataLayerHome.findByPrimaryKey( Integer.valueOf( strIdLayer ) );
-		if ( dataLayer.isPresent( ) )
-		{
-			return dataLayer.get( ).getSolrTag( );
-		}
-		else 
-		{
-			return StringUtils.EMPTY;
-		}
-		
-	}
-	
-	public GeolocItemPolygon getGeolocItemGeneral( String coordinate, String strTypeGeometry )
-	{
-        GeolocItemPolygon geoPolygon = new GeolocItemPolygon();
-        
-        String[] lstCoordPolygon = coordinate.split(";");
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getGeolocItemPoint( Double x, Double y, String adresse )
+    {
+
+        GeolocItem geolocItem = new GeolocItem( );
+        HashMap<String, Object> properties = new HashMap<>( );
+        properties.put( GeolocItem.PATH_PROPERTIES_ADDRESS, adresse );
+
+        HashMap<String, Object> geometry = new HashMap<>( );
+        geometry.put( GeolocItem.PATH_GEOMETRY_COORDINATES, Arrays.asList( x, y ) );
+        geometry.put( GeolocItem.PATH_GEOMETRY_TYPE, GeolocItem.VALUE_GEOMETRY_TYPE );
+        geolocItem.setGeometry( geometry );
+        geolocItem.setProperties( properties );
+
+        return geolocItem.toJSON( );
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getGeolocItemPolygon( String coordinate )
+    {
+        GeolocItemPolygon geoPolygon = getGeolocItemGeneral( coordinate, GeolocItem.VALUE_GEOMETRY_TYPE_POLYGON );
+
+        geoPolygon.setTypegeometry( GeolocItem.VALUE_GEOMETRY_TYPE_POLYGON );
+
+        return geoPolygon.toJSON( );
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getGeolocItemPolyline( String coordinate )
+    {
+        GeolocItemPolygon geoPolygon = getGeolocItemGeneral( coordinate, GeolocItem.VALUE_GEOMETRY_TYPE_POLYLINE );
+
+        geoPolygon.setTypegeometry( GeolocItem.VALUE_GEOMETRY_TYPE_POLYLINE );
+
+        return geoPolygon.toJSON( );
+    }
+
+    @Override
+    public String getSolrTag( String strIdLayer )
+    {
+        Optional<DataLayer> dataLayer = DataLayerHome.findByPrimaryKey( Integer.valueOf( strIdLayer ) );
+        if ( dataLayer.isPresent( ) )
+        {
+            return dataLayer.get( ).getSolrTag( );
+        }
+        else
+        {
+            return StringUtils.EMPTY;
+        }
+
+    }
+
+    public GeolocItemPolygon getGeolocItemGeneral( String coordinate, String strTypeGeometry )
+    {
+        GeolocItemPolygon geoPolygon = new GeolocItemPolygon( );
+
+        String [ ] lstCoordPolygon = coordinate.split( ";" );
         List<List<Double>> polygonLonLoat = new ArrayList<>( );
         List<List<List<Double>>> polygonCoord = new ArrayList<>( );
         HashMap<String, Object> geometryPolygon = new HashMap<>( );
-        
-        for (String coordPolygonXY : lstCoordPolygon )
+
+        for ( String coordPolygonXY : lstCoordPolygon )
         {
-        	String [] coordPolygonXY2 = coordPolygonXY.split( "," );
-        	double polygonx = Double.valueOf( coordPolygonXY2[0] );
-            double polygony = Double.valueOf( coordPolygonXY2[1] );
+            String [ ] coordPolygonXY2 = coordPolygonXY.split( "," );
+            double polygonx = Double.valueOf( coordPolygonXY2 [0] );
+            double polygony = Double.valueOf( coordPolygonXY2 [1] );
             polygonLonLoat.add( Arrays.asList( polygonx, polygony ) );
         }
-        
+
         if ( strTypeGeometry.equals( GeolocItemPolygon.VALUE_GEOMETRY_TYPE_POLYGON ) )
         {
-	        String [] coordPolygonXY2 = lstCoordPolygon[0].split( "," );
-	    	double polygonx = Double.valueOf( coordPolygonXY2[0] );
-	        double polygony = Double.valueOf( coordPolygonXY2[1] );
-	        polygonLonLoat.add( Arrays.asList( polygonx, polygony ) );
-	        polygonCoord.add( polygonLonLoat );
-	        geometryPolygon.put( GeolocItem.PATH_GEOMETRY_COORDINATES, polygonCoord );
+            String [ ] coordPolygonXY2 = lstCoordPolygon [0].split( "," );
+            double polygonx = Double.valueOf( coordPolygonXY2 [0] );
+            double polygony = Double.valueOf( coordPolygonXY2 [1] );
+            polygonLonLoat.add( Arrays.asList( polygonx, polygony ) );
+            polygonCoord.add( polygonLonLoat );
+            geometryPolygon.put( GeolocItem.PATH_GEOMETRY_COORDINATES, polygonCoord );
         }
-        else if ( strTypeGeometry.equals( GeolocItemPolygon.VALUE_GEOMETRY_TYPE_POLYLINE ) )
-        {
-        	geometryPolygon.put( GeolocItem.PATH_GEOMETRY_COORDINATES, polygonLonLoat );
-        }
-        
+        else
+            if ( strTypeGeometry.equals( GeolocItemPolygon.VALUE_GEOMETRY_TYPE_POLYLINE ) )
+            {
+                geometryPolygon.put( GeolocItem.PATH_GEOMETRY_COORDINATES, polygonLonLoat );
+            }
+
         geoPolygon.setGeometry( geometryPolygon );
-        
+
         return geoPolygon;
-	}
+    }
 
 }
