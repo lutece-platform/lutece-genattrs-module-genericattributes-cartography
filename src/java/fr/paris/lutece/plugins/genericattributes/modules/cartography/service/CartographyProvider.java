@@ -39,6 +39,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
+import jakarta.enterprise.context.ApplicationScoped;
 import org.apache.commons.lang3.StringUtils;
 
 import fr.paris.lutece.plugins.carto.business.DataLayer;
@@ -56,6 +57,7 @@ import fr.paris.lutece.util.ReferenceList;
  * OpenStreetMapProvider : provides Open street map support for Generic Attributes
  * 
  */
+@ApplicationScoped
 public class CartographyProvider implements ICartoProvider
 {
     private static final String PROPERTY_KEY = "genericattributes-openstreetmap.key";
