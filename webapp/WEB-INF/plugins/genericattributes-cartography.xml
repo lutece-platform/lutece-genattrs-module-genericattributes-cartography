@@ -4,7 +4,7 @@
     <!-- Plugin Informations -->
 	<name>genericattributes-cartography</name>
 	<class>fr.paris.lutece.plugins.genericattributes.modules.cartography.service.GenericAttributesCartographyPlugin</class>
-	<version>1.0.1-SNAPSHOT</version>
+	<version>1.0.1</version>
 	<description>module.genericattributes.cartography.module.description</description>
 	<documentation/>
 	<installation/>
