@@ -8,7 +8,7 @@
     <groupId>fr.paris.lutece.plugins</groupId>
     <artifactId>module-genericattributes-cartography</artifactId>
     <packaging>lutece-plugin</packaging>
-    <version>1.0.1</version>
+    <version>1.0.2-SNAPSHOT</version>
     <name>Lutece Generic Attributes cartography map module</name>
     <repositories>
         <repository>
@@ -43,6 +43,6 @@
         <connection>scm:git:https://github.com/lutece-platform/lutece-genattrs-module-genericattributes-cartography.git</connection>
         <developerConnection>scm:git:https://github.com/lutece-platform/lutece-genattrs-module-genericattributes-cartography.git</developerConnection>
         <url>https://github.com/lutece-platform/lutece-genattrs-module-genericattributes-cartography.git</url>
-      <tag>module-genericattributes-cartography-1.0.1</tag>
+      <tag>HEAD</tag>
   </scm>
 </project>
